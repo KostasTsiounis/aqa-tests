@@ -32,7 +32,7 @@
 		tar xvzf apache-maven-bin.tar.gz -C apache-maven --strip-components 1; \
 		ls -al; \
 		chmod -R 755 ${REPORTDIR}/apache-maven/lib; \
-		${REPORTDIR}/apache-maven/bin/mvn -version; \
+		<!--${REPORTDIR}/apache-maven/bin/mvn -version; \ -->
 		${REPORTDIR}/apache-maven/bin/mvn -f ${REPORTDIR}/pom.xml \
 		-Denforcer.skip \
 		-Dtestenvironment=standalonebundled \
