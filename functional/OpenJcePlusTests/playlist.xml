@@ -32,6 +32,7 @@
 		tar xvzf apache-maven-bin.tar.gz -C apache-maven --strip-components 1; \
 		ls -al; \
 		chmod +x ${REPORTDIR}/apache-maven/lib/jansi-2.4.1.jar; \
+		chmod +x ${REPORTDIR}/apache-maven/lib/jansi-native/Windows/x86_64/jansi.dll
 		${REPORTDIR}/apache-maven/bin/mvn -version; \
 		${REPORTDIR}/apache-maven/bin/mvn -f ${REPORTDIR}/pom.xml \
 		-Denforcer.skip \
