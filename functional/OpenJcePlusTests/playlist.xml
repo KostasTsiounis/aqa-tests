@@ -32,6 +32,7 @@
 		${REPORTDIR}/apache-maven/bin/mvn -f ${REPORTDIR}/pom.xml \
 		-Denforcer.skip \
 		-Dtestenvironment=standalonebundled \
+		-Djdk.build.target=26 \
 		test-compile \
 		surefire:test; \
 		$(TEST_STATUS); \
