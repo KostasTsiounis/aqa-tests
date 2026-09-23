@@ -21,20 +21,22 @@
 		mkdir apache-maven; \
 		tar xvzf apache-maven-bin.tar.gz -C apache-maven --strip-components 1; \
 		ls -al; \
-		JAVA_HOME=${TEST_JDK_HOME} ${REPORTDIR}/apache-maven/bin/mvn -version; \
-		JAVA_HOME=${TEST_JDK_HOME} ${REPORTDIR}/apache-maven/bin/mvn -f ${REPORTDIR}/pom.xml \
+		export JAVA_HOME=${TEST_JDK_HOME}; \
+		export PATH=${TEST_JDK_HOME}/bin:${PATH}; \
+		${REPORTDIR}/apache-maven/bin/mvn -version; \
+		${REPORTDIR}/apache-maven/bin/mvn -f ${REPORTDIR}/pom.xml \
 		-Denforcer.skip \
 		-Dtestenvironment=standalonebundled \
 		clean; \
 		mkdir -p ${REPORTDIR}/target/classes; \
-		JAVA_HOME=${TEST_JDK_HOME} ${REPORTDIR}/apache-maven/bin/mvn -f ${REPORTDIR}/pom.xml \
+		${REPORTDIR}/apache-maven/bin/mvn -f ${REPORTDIR}/pom.xml \
 		-Denforcer.skip \
 		-Dtestenvironment=standalonebundled \
 		test-compile \
 		surefire:test; \
 		$(TEST_STATUS); \
-		mkdir junitreports; \
-		cp -r ${REPORTDIR}/target/surefire-reports/* junitreports
+		mkdir -p junitreports; \
+		cp -r ${REPORTDIR}/target/surefire-reports/* junitreports || true
 		</command>
 		<features>
 			<feature>FIPS140_2:nonapplicable</feature>
