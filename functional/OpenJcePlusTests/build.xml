@@ -55,11 +55,24 @@
 			<equals arg1="${code}" arg2="128"/>
 		</condition>
 		<echo message="git rev-parse origin/${openjceplusGitBranch}" if:set="repo_code_128"/>
-		<exec executable="git" failonerror="true" dir="OpenJCEPlus" outputproperty="repo_sha2" resultproperty="code2" if:set="repo_code_128">
+		<exec executable="git" failonerror="false" dir="OpenJCEPlus" outputproperty="repo_sha2" resultproperty="code2" if:set="repo_code_128">
 			<arg value="rev-parse"/>
 			<arg value="origin/${openjceplusGitBranch}"/>
 		</exec>
-		<!-- Use sha2 if branch wasn't found locally, otherwise sha1 -->
+		<!-- If origin/branch also not found (code2=128), fall back to origin/semeru-main -->
+		<condition property="repo_code2_128">
+			<and>
+				<isset property="repo_code_128"/>
+				<equals arg1="${code2}" arg2="128"/>
+			</and>
+		</condition>
+		<echo message="git rev-parse origin/semeru-main (fallback)" if:set="repo_code2_128"/>
+		<exec executable="git" failonerror="true" dir="OpenJCEPlus" outputproperty="repo_sha3" resultproperty="code3" if:set="repo_code2_128">
+			<arg value="rev-parse"/>
+			<arg value="origin/semeru-main"/>
+		</exec>
+		<!-- Use sha3 (fallback), sha2 (origin/branch), or sha1 (local branch) -->
+		<property name="repo_sha_raw" value="${repo_sha3}" if:set="repo_code2_128"/>
 		<property name="repo_sha_raw" value="${repo_sha2}" if:set="repo_code_128"/>
 		<property name="repo_sha_raw" value="${repo_sha1}"/>
 		<!-- Strip newlines (safe on all platforms, needed on z/OS) -->
