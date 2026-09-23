@@ -15,12 +15,6 @@
 <playlist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../TKG/resources/playlist.xsd">
 	<test>
 		<testCaseName>openJcePlusTests</testCaseName>
-		<disables>
-			<disable>
-				<comment># only applicable for Semeru atm</comment>
-				<vendor>eclipse</vendor>
-			</disable>
-		</disables>
 		<command>cp -r ${TEST_RESROOT}/* ${REPORTDIR}/. ; \
 		cd ${REPORTDIR}; \
 		chmod 755 *.sh; \
