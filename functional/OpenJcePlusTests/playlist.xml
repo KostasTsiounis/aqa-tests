@@ -21,11 +21,15 @@
 		mkdir apache-maven; \
 		tar xvzf apache-maven-bin.tar.gz -C apache-maven --strip-components 1; \
 		ls -al; \
-		${REPORTDIR}/apache-maven/bin/mvn -version; \
-		${REPORTDIR}/apache-maven/bin/mvn -f ${REPORTDIR}/pom.xml \
+		JAVA_HOME=${TEST_JDK_HOME} ${REPORTDIR}/apache-maven/bin/mvn -version; \
+		JAVA_HOME=${TEST_JDK_HOME} ${REPORTDIR}/apache-maven/bin/mvn -f ${REPORTDIR}/pom.xml \
 		-Denforcer.skip \
 		-Dtestenvironment=standalonebundled \
-		clean \
+		clean; \
+		mkdir -p ${REPORTDIR}/target/classes; \
+		JAVA_HOME=${TEST_JDK_HOME} ${REPORTDIR}/apache-maven/bin/mvn -f ${REPORTDIR}/pom.xml \
+		-Denforcer.skip \
+		-Dtestenvironment=standalonebundled \
 		test-compile \
 		surefire:test; \
 		$(TEST_STATUS); \
